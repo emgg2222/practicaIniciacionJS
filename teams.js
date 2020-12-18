@@ -1,8 +1,35 @@
-export const liverPoolTeams = ['Liverpool', 'Everton']
-export const manchesterTeams = ['Manchester City', 'Manchester United']
-export const londonTeams = ['Arsenal', 'Chelsea', 'Fulham', 'West Ham', 'Tottenham', 'Crystal Palace']
-export const premierLeagueTeams = [
-    ...liverPoolTeams,
-    ...manchesterTeams,
-    ...londonTeams
+export const selecciones = [
+    'Rusia', 
+    'Alemania',
+    'Brasil',
+    'Portugal',
+    'Argentina',
+    'Bélgica',
+    'Polonia',
+    'Francia',
+    'España',
+    'Perú',
+    'Suiza',
+    'Inglaterra',
+    'Colombia',
+    'Croacia',
+    'México',
+    'Uruguay',
+    'Dinamarca',
+    'Suecia',
+    'Islandia',
+    'Costa Rica',
+    'Túnez',
+    'Egipto',
+    'Senegal',
+    'Irán',
+    'Serbia',
+    'Nigeria',
+    'Japón',
+    'Marruecos',
+    'Panamá',
+    'Corea del Sur',
+    'Arabia Saudí',
+    'Australia',
 ]
+
