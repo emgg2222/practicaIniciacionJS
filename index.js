@@ -13,6 +13,8 @@ teamNames.forEach(function(equipo) {
 
 premier.scheduleMatchDays()
 
+console.log("Grupos y equipos");
+console.log("=========================================");
 let i = 1
 premier.matchDaySchedule.forEach(matchDay => {
     console.log(`JORNADA ${i}`)
@@ -21,3 +23,32 @@ premier.matchDaySchedule.forEach(matchDay => {
     })
     i++
 })
+
+
+console.log("=========================================");
+console.log("===========COMIENZA EL MUNDIAL===========");
+console.log("=========================================");
+
+
+
+
+console.log("=========================================");
+console.log("==COMIENZO DE LA FASE DE ELIMINATORIAS===");
+console.log("=========================================");
+
+
+console.log("============OCTAVOS DE FINAL=============");
+
+
+console.log("============CUARTOS DE FINAL=============");
+
+console.log("==============SEMIFINALES================");
+
+console.log("==========TERCER Y CUARTO PUESTO=========");
+
+console.log("=================FINAL===================");
+
+
+console.log("=========================================");
+console.log("¡XXXXX CAMPEÓN DEL MUNDO!");
+console.log("=========================================");
