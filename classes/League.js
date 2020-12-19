@@ -1,4 +1,5 @@
 import Utilities from '../utils.js'
+/*import Group from './css/Group.js' */
 
 const LOCAL_TEAM = 0
 const AWAY_TEAM = 1
@@ -8,6 +9,7 @@ export default class League {
     constructor(name, teams=[], config={}) {
         this.name = name
         this.matchDaySchedule = []
+        this.scheduleGroups = []
         this.setup(config)
         this.setupTeams(teams)
     }
@@ -123,6 +125,7 @@ export default class League {
         })
     }
 
+
     scheduleMatchDays() {
         for (let i = 0; i < this.config.rounds; i++) {
             const newRound = this.createRound()
@@ -166,5 +169,34 @@ export default class League {
             })
         })
         this.matchDaySchedule = this.matchDaySchedule.concat(secondRound)
+    }
+
+
+    // Mi parte
+
+    organizeGroups()  {
+       
+       
+
+        console.log("numero equipos", this.teams.length)
+        console.log("numero grupos", this.config.groups)
+        const numTeamPerGroup = this.teams.length / this.config.groups
+        let indexTeam = 0
+        let numTeamSaveInGroup = 1
+        let letterAscii = 65; //La letra del grupo empieza en A
+        console.log("grupo",String.fromCharCode(letterAscii))
+      /*   this.teams.forEach(team => {
+            if(numTeamSaveInGroup == 1)
+            {
+                const groupName = 
+
+            }
+            if(numTeamSaveInGroup < numTeamPerGroup)
+            {
+                const newGroup  
+            }
+            numTeamSaveInGroup++
+
+        })        */
     }
 }

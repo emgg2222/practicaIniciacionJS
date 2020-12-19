@@ -1,7 +1,7 @@
 import FootballLeague from './classes/PointsBasedLeague.js'
 import { selecciones } from './teams.js'
 
-const config = { rounds: 2 }
+const config = { rounds: 1, groups: 8 }
 const premier = new FootballLeague('Champions League', selecciones, config)
 
 /* const teamNames = premier.teams.map(team => team.name) */
@@ -11,18 +11,22 @@ teamNames.forEach(function(equipo) {
 })
 */
 
-premier.scheduleMatchDays()
+//console.log(premier);
+//premier.scheduleGroups()
+
+//premier.scheduleMatchDays()
+premier.organizeGroups()
 
 console.log("GRUPOS Y EQUIPOS");
 console.log("=========================================");
 let i = 1
-premier.matchDaySchedule.forEach(matchDay => {
+/* premier.matchDaySchedule.forEach(matchDay => {
     console.log(`JORNADA ${i}`)
     matchDay.forEach(match => {
         console.log(match.join(' vs '))
     })
     i++
-})
+}) */
 
 
 console.log("=========================================");
