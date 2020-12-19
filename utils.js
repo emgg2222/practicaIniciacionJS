@@ -1,5 +1,5 @@
-export default function () {
-    Array.prototype.shuffle = function()
+
+  export default Array.prototype.shuffle = function()
     {
         var i = this.length;
         while (i)
@@ -10,5 +10,4 @@ export default function () {
             this[j] = t;
         }
         return this;
-    }
-}
+    } 

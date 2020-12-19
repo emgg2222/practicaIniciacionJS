@@ -1,4 +1,4 @@
-import Utilities from '../../utils.js'
+import Utilities from '../utils.js'
 
 const LOCAL_TEAM = 0
 const AWAY_TEAM = 1
