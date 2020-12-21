@@ -54,11 +54,7 @@ export default class League {
         this.teams.forEach(team => {
             teamsPerGroup.push (team);  
             if(numTeamSaveInGroup == numTeamPerGroup)
-            { 
-               
-                console.log ( "GRUPO ", String.fromCharCode(letterAscii))
-                console.log("equipos", teamsPerGroup)  
-                
+            {                 
                 const group = new Group("Grupo "+String.fromCharCode(letterAscii), teamsPerGroup)
                 group.scheduleMatches()
                 groups.push(group) 
@@ -75,7 +71,7 @@ export default class League {
             
 
         })    
-     
-        console.log("grupos", groups);   
+
+        return groups  
     }
 }

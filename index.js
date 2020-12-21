@@ -4,22 +4,32 @@ import { selecciones } from './teams.js'
 const config = { rounds: 1, groups: 8 }
 const premier = new FootballLeague('Champions League', selecciones, config)
 
-/* const teamNames = premier.teams.map(team => team.name) */
-/*
-teamNames.forEach(function(equipo) {
-    console.log(equipo)
-})
-*/
-
-//console.log(premier);
-//premier.scheduleGroups()
-
-//premier.scheduleMatchDays()
-premier.organizeGroups()
+const groups = premier.organizeGroups()
+const LOCAL_TEAM = 0
+const AWAY_TEAM = 1
 
 console.log("GRUPOS Y EQUIPOS");
 console.log("=========================================");
+
+
 let i = 1
+
+groups.forEach(element => {
+    console.log("");
+    console.log(element.name)
+    console.log("--------------------------")
+    element.teams.forEach(team => console.log(team.name))
+    let jornada = 1
+    element.matches.forEach(match=>
+        {
+            console.log("")
+            console.log("Jornada", jornada)
+            match.forEach(matchTeams=> {
+                console.log(matchTeams[LOCAL_TEAM].name , ' vs ', matchTeams[AWAY_TEAM].name)
+            })
+            jornada++
+        })
+});
 /* premier.matchDaySchedule.forEach(matchDay => {
     console.log(`JORNADA ${i}`)
     matchDay.forEach(match => {
