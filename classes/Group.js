@@ -6,6 +6,7 @@ export default class Group {
         this.name = name
         this.teams = teams
         this.matches = []
+        this.results = []
         
     }
 

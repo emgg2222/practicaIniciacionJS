@@ -2,8 +2,8 @@ import Utilities from '../utils.js'
 import Group from './Group.js'
 /*import Group from './css/Group.js' */
 
-const LOCAL_TEAM = 0
-const AWAY_TEAM = 1
+export const LOCAL_TEAM = 0
+export const AWAY_TEAM = 1
 
 export default class League {
 
@@ -11,6 +11,8 @@ export default class League {
         this.name = name
         this.matchDaySchedule = []
         this.scheduleGroups = []
+        this.teams = []
+        this.groups = []
         this.setup(config)
         this.setupTeams(teams)
     }
@@ -21,7 +23,6 @@ export default class League {
     }
 
     setupTeams(teamNames) {
-        this.teams = []
         for (const teamName of teamNames) {
             const team = this.customizeTeam(teamName)
             this.teams.push(team)
@@ -72,6 +73,50 @@ export default class League {
 
         })    
 
-        return groups  
+        this.groups   = groups
+    }
+
+    getStandings(){
+        throw new Error('updateStandings method not implemented')
+    }
+
+    play(match){
+
+        throw new Error('play method not implemented')
+
+    }
+
+    updateTeams()
+    {
+        throw new Error('updateTeams method not implemented') 
+    }
+
+    start() {
+        this.groups.forEach(group => {
+            const matchDaySummary = {
+                results: [],
+                standings: null
+            }
+            console.log("JUEGA ---> ", group.name)
+
+            group.matches.forEach(match => {
+
+                match.forEach(element => {
+                    const result = this.play(element)              
+                    this.updateTeams(result)
+                    matchDaySummary.results.push(result)
+                })            
+                
+            })           
+            group.results.push(matchDaySummary) 
+            console.log ("Resultado", matchDaySummary)
+            this.getStandings()
+            matchDaySummary.standings = this.teams.map(team => Object.assign({}, team))
+            // Guardar resumen de la jornada
+          /*   this.summaries.push(matchDaySummary)*/
+        })
+        
+        //console.log(this.groups)
+
     }
 }

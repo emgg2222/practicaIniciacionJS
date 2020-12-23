@@ -1,12 +1,12 @@
 import FootballLeague from './classes/PointsBasedLeague.js'
 import { selecciones } from './teams.js'
+import {LOCAL_TEAM, AWAY_TEAM} from './classes/League.js'
 
 const config = { rounds: 1, groups: 8 }
 const premier = new FootballLeague('Champions League', selecciones, config)
 
-const groups = premier.organizeGroups()
-const LOCAL_TEAM = 0
-const AWAY_TEAM = 1
+premier.organizeGroups()
+
 
 console.log("GRUPOS Y EQUIPOS");
 console.log("=========================================");
@@ -14,7 +14,7 @@ console.log("=========================================");
 
 let i = 1
 
-groups.forEach(element => {
+premier.groups.forEach(element => {
     console.log("");
     console.log(element.name)
     console.log("--------------------------")
@@ -30,18 +30,13 @@ groups.forEach(element => {
             jornada++
         })
 });
-/* premier.matchDaySchedule.forEach(matchDay => {
-    console.log(`JORNADA ${i}`)
-    matchDay.forEach(match => {
-        console.log(match.join(' vs '))
-    })
-    i++
-}) */
-
 
 console.log("=========================================");
 console.log("===========COMIENZA EL MUNDIAL===========");
 console.log("=========================================");
+
+premier.start()
+
 
 
 
