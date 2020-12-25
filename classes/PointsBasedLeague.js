@@ -88,7 +88,7 @@ export default class PointsBasedLeague extends League {
                 return -1
             } else if (teamA.points < teamB.points) {
                 return 1
-            } else { // empatan a puntosç
+            } else { // empatan a puntos
                const goalsDiffA = teamA.goalsFor - teamA.goalsAgainst
                const goalsDiffB = teamB.goalsFor - teamB.goalsAgainst
                if (goalsDiffA > goalsDiffB) {

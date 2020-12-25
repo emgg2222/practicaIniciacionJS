@@ -9,23 +9,92 @@ export default class EliminatoryFase {
         
     }
 
-    startOctavos(groups)
-    {
-        this.getMatchScheduleToOctavos(groups)
-        this.playMatches()
-       
-
-     
-        
-
-    }
-
+   
     playMatches(){
         this.matchSchedule.forEach(match => {
-            const result = this.play(match)
-            console.log(result.homeTeam,  result.homeGoals, " - ", result.awayGoals,  result.awayTeam, " => ", result.winner)
+            let result = null
+            do
+            {
+               result = this.play(match)
+            }while(!result)
+            console.log(result.homeTeam,  result.homeGoals, " - ", result.awayGoals,  result.awayTeam, " => ", result.winner)            
             this.results.push(result)
          })
+    }
+
+    
+    getGoals(max){
+        return Math.round(Math.random() * max)        
+    }
+
+   
+
+    play(match, sePuedeEmpatar = false)
+    {   
+        
+        const homeGoals = this.getGoals(10)
+        const awayGoals = this.getGoals(10)  
+        let winner = ""
+        let loser = ""
+
+        if(homeGoals === awayGoals && !sePuedeEmpatar)
+        {
+            return false
+        }  
+        
+        if(homeGoals > awayGoals)
+        {
+            winner = match[LOCAL_TEAM]
+            loser = match[AWAY_TEAM]
+        }else
+        {
+            winner = match[AWAY_TEAM]
+            loser = match[LOCAL_TEAM]
+        }
+
+        return {
+            homeTeam: match[LOCAL_TEAM],
+            homeGoals,
+            awayTeam: match[AWAY_TEAM],
+            awayGoals,
+            winner,
+            loser
+        }
+    }
+
+    getMatchScheduleToWinners(results){
+        let x = 1
+        let homeTeam = ""
+        let awayTeam = ""
+        results.forEach(result =>{
+            if (x == 1) {
+                homeTeam = result.winner
+                x++
+            }else
+            {
+                awayTeam = result.winner
+                this.matchSchedule.push([homeTeam,awayTeam])
+                x = 1
+            }             
+        })
+    }
+
+    getMathcScheduleToLosers (results){
+        let x = 1
+        let homeTeam = ""
+        let awayTeam = ""
+        results.forEach(result =>{
+            if (x == 1) {
+                homeTeam = result.loser
+                x++
+            }else
+            {
+                awayTeam = result.loser
+                this.matchSchedule.push([homeTeam,awayTeam])
+                x = 1
+            }             
+        })
+       
     }
 
     getMatchScheduleToOctavos (groups)
@@ -60,64 +129,32 @@ export default class EliminatoryFase {
 
     } 
 
-    getGoals(max){
-        return Math.round(Math.random() * max)        
-    }
-
-   
-
-    play(match, sePuedeEmpatar = false)
-    {   
-        
-        const homeGoals = this.getGoals(10)
-        const awayGoals = this.getGoals(10)  
-        let winner = ""
-
-        if(homeGoals == awayGoals && !sePuedeEmpatar)
-        {
-            this.play(match)
-        }  
-        
-        if(homeGoals > awayGoals)
-        {
-            winner = match[LOCAL_TEAM]
-        }else
-        {
-            winner = match[AWAY_TEAM]
-        }
-
-        return {
-            homeTeam: match[LOCAL_TEAM],
-            homeGoals,
-            awayTeam: match[AWAY_TEAM],
-            awayGoals,
-            winner
-        }
-    }
-
-    getMatchScheduleToCuartos(results){
-        let x = 1
-        let homeTeam = ""
-        let awayTeam = ""
-        results.forEach(result =>{
-            console.log ( result)
-            if (x == 1) {
-                homeTeam = result.winner
-                x++
-            }else
-            {
-                awayTeam = result.winner
-                this.matchSchedule.push([homeTeam,awayTeam])
-                x = 1
-            }
-            
-            this.matchSchedule.p
-        })
-    }
-
-    startCuartos(resultsOctavos){
-        this.getMatchScheduleToCuartos(resultsOctavos)
+    startOctavos(groups)
+    {
+        this.getMatchScheduleToOctavos(groups)
         this.playMatches()
     }
+
+  
+    startCuartos(resultsOctavos){
+        this.getMatchScheduleToWinners(resultsOctavos)
+        this.playMatches()
+    }
+
+    startSemifinals(resultsOctavos){
+        this.getMatchScheduleToWinners(resultsOctavos)
+        this.playMatches()
+    }
+
+    startThirdAndForthPlace(resultsSemifinals){
+        this.getMathcScheduleToLosers(resultsSemifinals)
+        this.playMatches()
+    }
+
+    startFinal(resultsSemifinals){
+        this.getMatchScheduleToWinners(resultsSemifinals)
+        this.playMatches()
+    }
+
 
 }

@@ -48,8 +48,6 @@ console.log("==COMIENZO DE LA FASE DE ELIMINATORIAS===");
 console.log("=========================================");
 
 
-
-
 console.log("============OCTAVOS DE FINAL=============");
 const eliminatoryFase = new EliminatoryFase()
 eliminatoryFase.startOctavos(premier.groups)
@@ -62,11 +60,19 @@ cuartosFase.startCuartos(eliminatoryFase.results)
 
 console.log("==============SEMIFINALES================");
 
+const semifinalsFase = new EliminatoryFase()
+semifinalsFase.startSemifinals(cuartosFase.results)
+
 console.log("==========TERCER Y CUARTO PUESTO=========");
+
+const thirdAndForthPlace = new EliminatoryFase()
+thirdAndForthPlace.startThirdAndForthPlace(semifinalsFase.results)
 
 console.log("=================FINAL===================");
 
+const finalMatch = new EliminatoryFase()
+finalMatch.startFinal(semifinalsFase.results)
 
 console.log("=========================================");
-console.log("¡XXXXX CAMPEÓN DEL MUNDO!");
+console.log(finalMatch.results[0].winner, " CAMPEÓN DEL MUNDO!");
 console.log("=========================================");
