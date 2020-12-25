@@ -103,14 +103,13 @@ export default class League {
                     const result = this.play(element)              
                     this.updateTeams(result)
                     matchDaySummary.results.push(result)
-                    console.log(result.homeTeam.name," ", result.homeGoals, " - ", result.awayGoals, " ", result.awayTeam.name)
-                   
+                    console.log(result.homeTeam.name," ", result.homeGoals, " - ", result.awayGoals, " ", result.awayTeam.name)                   
                 })   
                 jornada++       
                 this.getStandings(group.teams)
-                matchDaySummary.standings = group.teams.map(team => Object.assign({}, team))              
-               
-            console.table(matchDaySummary.standings.map( team => {
+                matchDaySummary.standings = group.teams.map(team => Object.assign({}, team))             
+            
+                console.table(matchDaySummary.standings.map( team => {
                 return {
                     Equipo: team.name,
                     Puntos: team.points,

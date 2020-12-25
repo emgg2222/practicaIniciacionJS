@@ -9,17 +9,23 @@ export default class EliminatoryFase {
         
     }
 
-    start(groups)
+    startOctavos(groups)
     {
         this.getMatchScheduleToOctavos(groups)
-        this.matchSchedule.forEach(match => {
-           const result = this.play(match)
-           this.results.push(result)
-        })
+        this.playMatches()
+       
 
-        console.log("result",this.results)
+     
         
 
+    }
+
+    playMatches(){
+        this.matchSchedule.forEach(match => {
+            const result = this.play(match)
+            console.log(result.homeTeam,  result.homeGoals, " - ", result.awayGoals,  result.awayTeam, " => ", result.winner)
+            this.results.push(result)
+         })
     }
 
     getMatchScheduleToOctavos (groups)
@@ -58,15 +64,60 @@ export default class EliminatoryFase {
         return Math.round(Math.random() * max)        
     }
 
+   
+
     play(match, sePuedeEmpatar = false)
-    {
+    {   
+        
         const homeGoals = this.getGoals(10)
-        const awayGoals = this.getGoals(10)
+        const awayGoals = this.getGoals(10)  
+        let winner = ""
+
+        if(homeGoals == awayGoals && !sePuedeEmpatar)
+        {
+            this.play(match)
+        }  
+        
+        if(homeGoals > awayGoals)
+        {
+            winner = match[LOCAL_TEAM]
+        }else
+        {
+            winner = match[AWAY_TEAM]
+        }
+
         return {
             homeTeam: match[LOCAL_TEAM],
             homeGoals,
             awayTeam: match[AWAY_TEAM],
-            awayGoals
+            awayGoals,
+            winner
         }
     }
+
+    getMatchScheduleToCuartos(results){
+        let x = 1
+        let homeTeam = ""
+        let awayTeam = ""
+        results.forEach(result =>{
+            console.log ( result)
+            if (x == 1) {
+                homeTeam = result.winner
+                x++
+            }else
+            {
+                awayTeam = result.winner
+                this.matchSchedule.push([homeTeam,awayTeam])
+                x = 1
+            }
+            
+            this.matchSchedule.p
+        })
+    }
+
+    startCuartos(resultsOctavos){
+        this.getMatchScheduleToCuartos(resultsOctavos)
+        this.playMatches()
+    }
+
 }

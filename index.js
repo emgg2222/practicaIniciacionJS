@@ -52,9 +52,13 @@ console.log("=========================================");
 
 console.log("============OCTAVOS DE FINAL=============");
 const eliminatoryFase = new EliminatoryFase()
-eliminatoryFase.start(premier.groups)
+eliminatoryFase.startOctavos(premier.groups)
 
 console.log("============CUARTOS DE FINAL=============");
+
+const cuartosFase = new EliminatoryFase()
+cuartosFase.startCuartos(eliminatoryFase.results)
+
 
 console.log("==============SEMIFINALES================");
 
