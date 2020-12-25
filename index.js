@@ -31,6 +31,7 @@ premier.groups.forEach(element => {
         })
 });
 
+console.log("")
 console.log("=========================================");
 console.log("===========COMIENZA EL MUNDIAL===========");
 console.log("=========================================");

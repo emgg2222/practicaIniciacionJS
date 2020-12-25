@@ -97,21 +97,62 @@ export default class League {
                 results: [],
                 standings: null
             }
-            console.log("JUEGA ---> ", group.name)
-
+           
+            let jornada = 1
             group.matches.forEach(match => {
-
+                console.log(group.name ,' - ', "Jornada ", jornada, ":" )
+                console.log('-----------------------')
                 match.forEach(element => {
                     const result = this.play(element)              
                     this.updateTeams(result)
                     matchDaySummary.results.push(result)
-                })            
+                    console.log(result.homeTeam.name," ", result.homeGoals, " - ", result.awayGoals, " ", result.awayTeam.name)
+                   
+                })   
+                jornada++       
+                this.getStandings(group.teams)
+                matchDaySummary.standings = group.teams.map(team => Object.assign({}, team))
+                
+               
+            console.table(matchDaySummary.standings.map( team => {
+                return {
+                    Equipo: team.name,
+                    Puntos: team.points,
+                    'Goles a favor': team.goalsFor,
+                    'Goles en contra': team.goalsAgainst,
+                    'Diferencia goles': team.goalsFor - team.goalsAgainst
+                }
+
+            }
+
+            ))
+              
+            /*     for(let standing in matchDaySummary.standings)
+                {
+                    console.log(standing[0])
+                }
+               */
+
+                 // console.table(totalStand) 
+            
+
+            /*     return {
+                    Team: standing.name,
+                    Points: standing.points,
+                    PlayedMatches: standing.matchesWon + standing.matchesDrawn + standing.matchesLost,
+                    Won: standing.matchesWon,
+                    Drawn: standing.matchesDrawn,
+                    Lost: standing.matchesLost,
+                    GoalsFor: standing.goalsFor,
+                    GoalsAgainst: standing.goalsAgainst,
+                    GoalsDiff: standing.goalsFor - standing.goalsAgainst
+                } */
+ 
                 
             })           
             group.results.push(matchDaySummary) 
-            console.log ("Resultado", matchDaySummary)
-            this.getStandings()
-            matchDaySummary.standings = this.teams.map(team => Object.assign({}, team))
+           /* console.log ("Resultado", matchDaySummary)*/
+            
             // Guardar resumen de la jornada
           /*   this.summaries.push(matchDaySummary)*/
         })
