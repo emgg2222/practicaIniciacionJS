@@ -39,10 +39,6 @@ console.log("=========================================");
 
 premier.start()
 
-
-
-
-
 console.log("=========================================");
 console.log("==COMIENZO DE LA FASE DE ELIMINATORIAS===");
 console.log("=========================================");
