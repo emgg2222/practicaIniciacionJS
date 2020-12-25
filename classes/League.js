@@ -39,8 +39,6 @@ export default class League {
         }
     }
 
-
-
     // Mi parte
 
     organizeGroups()  {
@@ -96,8 +94,7 @@ export default class League {
             const matchDaySummary = {
                 results: [],
                 standings: null
-            }
-           
+            }           
             let jornada = 1
             group.matches.forEach(match => {
                 console.log(group.name ,' - ', "Jornada ", jornada, ":" )
@@ -111,8 +108,7 @@ export default class League {
                 })   
                 jornada++       
                 this.getStandings(group.teams)
-                matchDaySummary.standings = group.teams.map(team => Object.assign({}, team))
-                
+                matchDaySummary.standings = group.teams.map(team => Object.assign({}, team))              
                
             console.table(matchDaySummary.standings.map( team => {
                 return {
@@ -122,42 +118,11 @@ export default class League {
                     'Goles en contra': team.goalsAgainst,
                     'Diferencia goles': team.goalsFor - team.goalsAgainst
                 }
-
             }
-
-            ))
-              
-            /*     for(let standing in matchDaySummary.standings)
-                {
-                    console.log(standing[0])
-                }
-               */
-
-                 // console.table(totalStand) 
-            
-
-            /*     return {
-                    Team: standing.name,
-                    Points: standing.points,
-                    PlayedMatches: standing.matchesWon + standing.matchesDrawn + standing.matchesLost,
-                    Won: standing.matchesWon,
-                    Drawn: standing.matchesDrawn,
-                    Lost: standing.matchesLost,
-                    GoalsFor: standing.goalsFor,
-                    GoalsAgainst: standing.goalsAgainst,
-                    GoalsDiff: standing.goalsFor - standing.goalsAgainst
-                } */
- 
-                
+            ))        
             })           
-            group.results.push(matchDaySummary) 
-           /* console.log ("Resultado", matchDaySummary)*/
-            
-            // Guardar resumen de la jornada
-          /*   this.summaries.push(matchDaySummary)*/
+            group.results.push(matchDaySummary)         
         })
-        
-        //console.log(this.groups)
 
     }
 }

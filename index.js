@@ -1,4 +1,5 @@
 import FootballLeague from './classes/PointsBasedLeague.js'
+import EliminatoryFase from './classes/EliminatoryFase.js'
 import { selecciones } from './teams.js'
 import {LOCAL_TEAM, AWAY_TEAM} from './classes/League.js'
 
@@ -46,6 +47,9 @@ console.log("=========================================");
 console.log("==COMIENZO DE LA FASE DE ELIMINATORIAS===");
 console.log("=========================================");
 
+
+const eliminatoryFase = new EliminatoryFase()
+eliminatoryFase.getMatchScheduleToOctavos(premier.groups)
 
 console.log("============OCTAVOS DE FINAL=============");
 
