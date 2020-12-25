@@ -48,11 +48,11 @@ console.log("==COMIENZO DE LA FASE DE ELIMINATORIAS===");
 console.log("=========================================");
 
 
-const eliminatoryFase = new EliminatoryFase()
-eliminatoryFase.getMatchScheduleToOctavos(premier.groups)
+
 
 console.log("============OCTAVOS DE FINAL=============");
-
+const eliminatoryFase = new EliminatoryFase()
+eliminatoryFase.start(premier.groups)
 
 console.log("============CUARTOS DE FINAL=============");
 

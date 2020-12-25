@@ -1,9 +1,25 @@
+import getGoals from '../utils.js'
+import {LOCAL_TEAM, AWAY_TEAM} from './League.js'
 export default class EliminatoryFase {
-    constructor()
+    constructor( )
     {
        this.matchSchedule = []
        this.results = []
+
         
+    }
+
+    start(groups)
+    {
+        this.getMatchScheduleToOctavos(groups)
+        this.matchSchedule.forEach(match => {
+           const result = this.play(match)
+           this.results.push(result)
+        })
+
+        console.log("result",this.results)
+        
+
     }
 
     getMatchScheduleToOctavos (groups)
@@ -38,4 +54,19 @@ export default class EliminatoryFase {
 
     } 
 
+    getGoals(max){
+        return Math.round(Math.random() * max)        
+    }
+
+    play(match, sePuedeEmpatar = false)
+    {
+        const homeGoals = this.getGoals(10)
+        const awayGoals = this.getGoals(10)
+        return {
+            homeTeam: match[LOCAL_TEAM],
+            homeGoals,
+            awayTeam: match[AWAY_TEAM],
+            awayGoals
+        }
+    }
 }
