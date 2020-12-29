@@ -1,5 +1,9 @@
+
 import {LOCAL_TEAM, AWAY_TEAM} from './League.js'
 import {getGoals} from '../utils.js'
+
+const WINNER_OF_GROUP = 0
+const SECOND_OF_GROUP = 1
 export default class EliminatoryFase {
     constructor( )
     {
@@ -21,11 +25,6 @@ export default class EliminatoryFase {
             this.results.push(result)
          })
     }
-
-    
-   
-
-   
 
     play(match, sePuedeEmpatar = false)
     {   
@@ -60,7 +59,35 @@ export default class EliminatoryFase {
         }
     }
 
-    getMatchScheduleToWinners(results){
+    getMatchScheduleToCuartosAndSemifinal(results){
+        let x = 1
+        let match1HomeTeam = ""
+        let match2HomeTeam = ""
+        results.forEach(result =>{
+            if (x % 2 == 0) {
+                if(match2HomeTeam == ""){
+                    match2HomeTeam = result.winner
+                }else
+                {
+                    this.matchSchedule.push([match2HomeTeam,result.winner])
+                    match2HomeTeam = ""
+                }                    
+            }else 
+            {
+                if(match1HomeTeam == ""){
+                    match1HomeTeam = result.winner
+                }else
+                {
+                    this.matchSchedule.push([match1HomeTeam,result.winner])
+                    match1HomeTeam = ""
+                }                  
+                
+            }  
+            x++           
+        })
+    }
+
+    getMathcScheduleToWinners (results){
         let x = 1
         let homeTeam = ""
         let awayTeam = ""
@@ -75,6 +102,7 @@ export default class EliminatoryFase {
                 x = 1
             }             
         })
+       
     }
 
     getMathcScheduleToLosers (results){
@@ -101,12 +129,11 @@ export default class EliminatoryFase {
        let match2 = []
        let x=1
 
-        groups.forEach(group => {
-                   
+        groups.forEach(group => {                   
             group.results.forEach(result => {
                 if(x == 2){
-                    match1.push(result.standings[1].name)
-                    match2.push(result.standings[0].name)
+                    match1.push(result.standings[SECOND_OF_GROUP].name)
+                    match2.push(result.standings[WINNER_OF_GROUP].name)
                     this.matchSchedule.push (match1)
                     this.matchSchedule.push (match2)
                     match1 = []
@@ -114,17 +141,15 @@ export default class EliminatoryFase {
                     x=1
                 }else
                 {
-                    match1.push(result.standings[0].name)
-                    match2.push(result.standings[1].name)                    
+                    match1.push(result.standings[WINNER_OF_GROUP].name)
+                    match2.push(result.standings[SECOND_OF_GROUP].name)                    
                     x++
                 }                 
         /*         console.log("Equipo Ganador grupo", result.standings[0].name)
                 console.log("Equipo Segundo grupo", result.standings[1].name) */
-            })
-            
+            })            
         });
         /* console.log("partidos", this.matchSchedule) */
-
     } 
 
     startOctavos(groups)
@@ -132,15 +157,14 @@ export default class EliminatoryFase {
         this.getMatchScheduleToOctavos(groups)
         this.playMatches()
     }
-
   
     startCuartos(resultsOctavos){
-        this.getMatchScheduleToWinners(resultsOctavos)
+        this.getMatchScheduleToCuartosAndSemifinal(resultsOctavos)
         this.playMatches()
     }
 
     startSemifinals(resultsOctavos){
-        this.getMatchScheduleToWinners(resultsOctavos)
+        this.getMatchScheduleToCuartosAndSemifinal(resultsOctavos)
         this.playMatches()
     }
 
@@ -150,9 +174,8 @@ export default class EliminatoryFase {
     }
 
     startFinal(resultsSemifinals){
-        this.getMatchScheduleToWinners(resultsSemifinals)
+        this.getMathcScheduleToWinners(resultsSemifinals)
         this.playMatches()
     }
-
 
 }
