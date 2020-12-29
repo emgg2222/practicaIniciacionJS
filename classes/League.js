@@ -1,9 +1,11 @@
 import Utilities from '../utils.js'
 import Group from './Group.js'
-/*import Group from './css/Group.js' */
+import { rfdc } from './rfdc.js'
 
 export const LOCAL_TEAM = 0
 export const AWAY_TEAM = 1
+
+const clone = rfdc()
 
 export default class League {
 
@@ -106,7 +108,7 @@ export default class League {
                 })   
                 jornada++       
                 this.getStandings(group.teams)
-                matchDaySummary.standings = group.teams.map(team => Object.assign({}, team))             
+                matchDaySummary.standings = group.teams.map(team => clone(team))             
             
                 console.table(matchDaySummary.standings.map( team => {
                 return {
