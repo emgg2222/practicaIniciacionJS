@@ -1,5 +1,5 @@
-import getGoals from '../utils.js'
 import {LOCAL_TEAM, AWAY_TEAM} from './League.js'
+import {getGoals} from '../utils.js'
 export default class EliminatoryFase {
     constructor( )
     {
@@ -23,17 +23,15 @@ export default class EliminatoryFase {
     }
 
     
-    getGoals(max){
-        return Math.round(Math.random() * max)        
-    }
+   
 
    
 
     play(match, sePuedeEmpatar = false)
     {   
         
-        const homeGoals = this.getGoals(10)
-        const awayGoals = this.getGoals(10)  
+        const homeGoals = getGoals(10)
+        const awayGoals = getGoals(10)  
         let winner = ""
         let loser = ""
 

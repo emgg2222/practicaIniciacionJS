@@ -12,4 +12,6 @@
         return this;
     } 
 
-    
+    export function getGoals(max){
+      return Math.round(Math.random() * max)        
+  }
