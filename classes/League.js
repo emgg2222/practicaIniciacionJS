@@ -65,8 +65,7 @@ export default class League {
              {           
                       
                 numTeamSaveInGroup++
-             }
-            
+             }   
             
 
         })    

@@ -94,8 +94,17 @@ export default class PointsBasedLeague extends League {
                    return -1
                } else if (goalsDiffA < goalsDiffB) {
                    return 1
-               } else {
-                   return 0
+               } else { // empatan a diferencia goles
+                   if(teamB.name > teamA.name)
+                   {
+                       return -1                       
+                   }else if(teamA.name > teamB.name)
+                   {
+                       return 1
+                   }else
+                   {
+                       return 0
+                   }
                }
             }
         })
