@@ -12,7 +12,6 @@ export default class EliminatoryFase {
 
         
     }
-
    
     playMatches(){
         this.matchSchedule.forEach(match => {
@@ -101,8 +100,7 @@ export default class EliminatoryFase {
                 this.matchSchedule.push([homeTeam,awayTeam])
                 x = 1
             }             
-        })
-       
+        })       
     }
 
     getMathcScheduleToLosers (results){
@@ -119,8 +117,7 @@ export default class EliminatoryFase {
                 this.matchSchedule.push([homeTeam,awayTeam])
                 x = 1
             }             
-        })
-       
+        })       
     }
 
     getMatchScheduleToOctavos (groups)
@@ -145,11 +142,8 @@ export default class EliminatoryFase {
                     match2.push(result.standings[SECOND_OF_GROUP].name)                    
                     x++
                 }                 
-        /*         console.log("Equipo Ganador grupo", result.standings[0].name)
-                console.log("Equipo Segundo grupo", result.standings[1].name) */
             })            
         });
-        /* console.log("partidos", this.matchSchedule) */
     } 
 
     startOctavos(groups)
