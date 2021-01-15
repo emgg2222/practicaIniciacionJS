@@ -81,31 +81,86 @@ export default class PointsBasedLeague extends League {
         }
     }
 
-    getStandings(team) {
+  
+
+    getStandings(team, results) {
+        let goalsTeamA = 0
+        let goalsTeamB = 0
+       
         team.sort(function(teamA, teamB) {
             if (teamA.points > teamB.points) {
                 return -1
             } else if (teamA.points < teamB.points) {
                 return 1
             } else { // empatan a puntos
-               const goalsDiffA = teamA.goalsFor - teamA.goalsAgainst
-               const goalsDiffB = teamB.goalsFor - teamB.goalsAgainst
-               if (goalsDiffA > goalsDiffB) {
-                   return -1
-               } else if (goalsDiffA < goalsDiffB) {
-                   return 1
-               } else { // empatan a diferencia goles
-                   if(teamB.name > teamA.name)
-                   {
-                       return -1                       
-                   }else if(teamA.name > teamB.name)
-                   {
-                       return 1
-                   }else
-                   {
-                       return 0
-                   }
-               }
+
+                results.forEach(element => {
+                    if( (element.awayTeam.name === teamA.name || element.homeTeam.name === teamA.name ) &&
+                        (element.awayTeam.name === teamB.name || element.homeTeam.name === teamB.name))
+                    {
+                        if(element.awayTeam.name === teamA.name)
+                        {
+                             goalsTeamA = element.awayGoals 
+                             goalsTeamB = element.homeGoals 
+                        }else
+                        {
+                            goalsTeamA = element.homeGoals
+                            goalsTeamB = element.awayGoals
+                        }
+
+                        if (goalsTeamA < goalsTeamB)
+                        {
+                            return -1
+                        } else if ( goalsTeamA > goalsTeamB)
+                        {
+                            return 1
+                        } else {
+                            const goalsDiffA = teamA.goalsFor - teamA.goalsAgainst
+                            const goalsDiffB = teamB.goalsFor - teamB.goalsAgainst
+                            if (goalsDiffA > goalsDiffB) {
+                                return -1
+                            } else if (goalsDiffA < goalsDiffB) {
+                                return 1
+                            } else { // empatan a diferencia goles
+                                if(teamB.name > teamA.name)
+                                {
+                                    return -1                       
+                                }else if(teamA.name > teamB.name)
+                                {
+                                    return 1
+                                }else
+                                {
+                                    return 0
+                                }
+                            }
+                            
+                        }
+          
+                    }  else{
+                        const goalsDiffA = teamA.goalsFor - teamA.goalsAgainst
+                        const goalsDiffB = teamB.goalsFor - teamB.goalsAgainst
+                        if (goalsDiffA > goalsDiffB) {
+                            return -1
+                        } else if (goalsDiffA < goalsDiffB) {
+                            return 1
+                        } else { // empatan a diferencia goles
+                            if(teamB.name > teamA.name)
+                            {
+                                return -1                       
+                            }else if(teamA.name > teamB.name)
+                            {
+                                return 1
+                            }else
+                            {
+                                return 0
+                            }
+                        }
+                    }  
+                    
+                });
+
+
+            
             }
         })
     }

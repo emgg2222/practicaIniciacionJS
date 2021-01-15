@@ -107,7 +107,7 @@ export default class League {
                     console.log(result.homeTeam.name," ", result.homeGoals, " - ", result.awayGoals, " ", result.awayTeam.name)                   
                 })   
                 jornada++       
-                this.getStandings(group.teams)
+                this.getStandings(group.teams, matchDaySummary.results)
                 matchDaySummary.standings = group.teams.map(team => clone(team))             
             
                 console.table(matchDaySummary.standings.map( team => {
