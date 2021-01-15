@@ -86,6 +86,7 @@ export default class PointsBasedLeague extends League {
     getStandings(team, results) {
         let goalsTeamA = 0
         let goalsTeamB = 0
+        
        
         team.sort(function(teamA, teamB) {
             if (teamA.points > teamB.points) {
@@ -94,26 +95,26 @@ export default class PointsBasedLeague extends League {
                 return 1
             } else { // empatan a puntos
 
-                results.forEach(element => {
-                    if( (element.awayTeam.name === teamA.name || element.homeTeam.name === teamA.name ) &&
-                        (element.awayTeam.name === teamB.name || element.homeTeam.name === teamB.name))
-                    {
-                        if(element.awayTeam.name === teamA.name)
+                const result = results.filter(element => 
+                    (element.awayTeam.name === teamA.name || element.homeTeam.name === teamA.name ) &&
+                    (element.awayTeam.name === teamB.name || element.homeTeam.name === teamB.name))
+                if(result.length > 0) {
+                        if(result[0].awayTeam.name === teamA.name)
                         {
-                             goalsTeamA = element.awayGoals 
-                             goalsTeamB = element.homeGoals 
+                             goalsTeamA = result[0].awayGoals 
+                             goalsTeamB = result[0].homeGoals 
                         }else
                         {
-                            goalsTeamA = element.homeGoals
-                            goalsTeamB = element.awayGoals
+                            goalsTeamA = result[0].homeGoals
+                            goalsTeamB = result[0].awayGoals
                         }
 
-                        if (goalsTeamA < goalsTeamB)
+                        if (goalsTeamA > goalsTeamB)
                         {
-                            return -1
-                        } else if ( goalsTeamA > goalsTeamB)
+                            return -1                            
+                        } else if ( goalsTeamA < goalsTeamB)
                         {
-                            return 1
+                            return 1                            
                         } else {
                             const goalsDiffA = teamA.goalsFor - teamA.goalsAgainst
                             const goalsDiffB = teamB.goalsFor - teamB.goalsAgainst
@@ -124,42 +125,37 @@ export default class PointsBasedLeague extends League {
                             } else { // empatan a diferencia goles
                                 if(teamB.name > teamA.name)
                                 {
-                                    return -1                       
+                                    return -1                                                          
                                 }else if(teamA.name > teamB.name)
                                 {
-                                    return 1
+                                    return 1                                    
                                 }else
                                 {
                                     return 0
                                 }
-                            }
-                            
-                        }
-          
-                    }  else{
-                        const goalsDiffA = teamA.goalsFor - teamA.goalsAgainst
-                        const goalsDiffB = teamB.goalsFor - teamB.goalsAgainst
-                        if (goalsDiffA > goalsDiffB) {
-                            return -1
-                        } else if (goalsDiffA < goalsDiffB) {
-                            return 1
-                        } else { // empatan a diferencia goles
-                            if(teamB.name > teamA.name)
-                            {
-                                return -1                       
-                            }else if(teamA.name > teamB.name)
-                            {
-                                return 1
-                            }else
-                            {
-                                return 0
-                            }
-                        }
+                            }                            
+                        }          
                     }  
-                    
-                });
-
-
+                   
+                
+                const goalsDiffA = teamA.goalsFor - teamA.goalsAgainst
+                const goalsDiffB = teamB.goalsFor - teamB.goalsAgainst
+                if (goalsDiffA > goalsDiffB) {
+                    return -1
+                } else if (goalsDiffA < goalsDiffB) {
+                    return 1
+                } else { // empatan a diferencia goles
+                    if(teamB.name > teamA.name)
+                    {
+                        return -1                       
+                    }else if(teamA.name > teamB.name)
+                    {
+                        return 1
+                    }else
+                    {
+                        return 0
+                    }
+                }
             
             }
         })
