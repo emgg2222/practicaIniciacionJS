@@ -95,18 +95,18 @@ export default class PointsBasedLeague extends League {
                 return 1
             } else { // empatan a puntos
 
-                const result = results.filter(element => 
+                const result = results.find(element => 
                     (element.awayTeam.name === teamA.name || element.homeTeam.name === teamA.name ) &&
                     (element.awayTeam.name === teamB.name || element.homeTeam.name === teamB.name))
-                if(result.length > 0) {
-                        if(result[0].awayTeam.name === teamA.name)
+                if(result) {
+                        if(result.awayTeam.name === teamA.name)
                         {
-                             goalsTeamA = result[0].awayGoals 
-                             goalsTeamB = result[0].homeGoals 
+                             goalsTeamA = result.awayGoals 
+                             goalsTeamB = result.homeGoals 
                         }else
                         {
-                            goalsTeamA = result[0].homeGoals
-                            goalsTeamB = result[0].awayGoals
+                            goalsTeamA = result.homeGoals
+                            goalsTeamB = result.awayGoals
                         }
 
                         if (goalsTeamA > goalsTeamB)
