@@ -40,7 +40,7 @@ console.log("=========================================");
 
 worldCup.start()
 
-worldCup.groups.forEach(group => {    
+worldCup.groups.forEach(group => {     
       group.journeys.forEach(journey => {
         console.log(group.name ,' - ', journey.name, ":" )
         console.log('-----------------------')
@@ -67,32 +67,30 @@ console.log("=========================================");
 console.log("==COMIENZO DE LA FASE DE ELIMINATORIAS===");
 console.log("=========================================");
 
-
-console.log("============OCTAVOS DE FINAL=============");
 const eliminatoryFase = new EliminatoryFase()
-eliminatoryFase.startOctavos(worldCup.groups)
+const firstGroup = eliminatoryFase.getMatchSchedule(worldCup.groups)
 
-console.log("============CUARTOS DE FINAL=============");
+const resultsEliminatoryFase = eliminatoryFase.start(firstGroup);
 
-const cuartosFase = new EliminatoryFase()
-cuartosFase.startCuartos(eliminatoryFase.results)
+resultsEliminatoryFase.forEach(result => {
+
+        console.log("")
+        console.log("============",result.name,"=============");
+        result.results.forEach(element => {
+        console.log(element.homeTeam,  element.homeGoals, " - ", element.awayGoals,  element.awayTeam, " => ", element.winner)            
+
+        })
+    
+        if(result.isTheFinal) {
+            console.log("");
+            console.log("=========================================");
+            console.log(result.results[0].winner, " CAMPEÓN DEL MUNDO!");
+            console.log("=========================================");
+        }
+    
+    
+})
 
 
-console.log("==============SEMIFINALES================");
 
-const semifinalsFase = new EliminatoryFase()
-semifinalsFase.startSemifinals(cuartosFase.results)
 
-console.log("==========TERCER Y CUARTO PUESTO=========");
-
-const thirdAndForthPlace = new EliminatoryFase()
-thirdAndForthPlace.startThirdAndForthPlace(semifinalsFase.results)
-
-console.log("=================FINAL===================");
-
-const finalMatch = new EliminatoryFase()
-finalMatch.startFinal(semifinalsFase.results)
-
-console.log("=========================================");
-console.log(finalMatch.results[0].winner, " CAMPEÓN DEL MUNDO!");
-console.log("=========================================");

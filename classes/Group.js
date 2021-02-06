@@ -8,9 +8,8 @@ export default class Group {
     {
         this.name = name
         this.teams = teams
-        this.journeys =[]
-        
-        
+        this.journeys = []
+        this.results = []        
     }
 
 

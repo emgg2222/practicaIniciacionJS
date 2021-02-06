@@ -91,18 +91,21 @@ export default class League {
     start() {
         this.groups.forEach(group => {
             const matchDaySummary = {
-                results: []
+                results: [],
+                standings: null
             }    
             group.journeys.forEach(journey => {
                 journey.matches.forEach(element => {
                     const result = this.play(element)              
                     this.updateTeams(result)
                     matchDaySummary.results.push(result)
-                    element.result.push(result);                  
+                    element.result.push(result);                                
                 })   
                 this.getStandings(group.teams, matchDaySummary.results)
-                journey.standings = group.teams.map(team => clone(team))    
-            })                               
+                journey.standings = group.teams.map(team => clone(team))
+                matchDaySummary.standings = journey.standings    
+            })
+            group.results.push(matchDaySummary)
         })
     }
 }

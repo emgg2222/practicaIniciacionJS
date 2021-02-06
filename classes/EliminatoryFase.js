@@ -1,28 +1,35 @@
 
 import {LOCAL_TEAM, AWAY_TEAM} from './League.js'
 import {getGoals} from '../utils.js'
+import EliminatoryFasePlayed from './EliminatoryFasePlayed.js'
 
 const WINNER_OF_GROUP = 0
 const SECOND_OF_GROUP = 1
+const ROUND_OF_16 = "OCTAVOS DE FINAL"
+const ROUND_OF_8 = "CUARTOS DE FINAL"
+const SEMIFINAL = "SEMIFINAL"
+const THRID_AND_FORTH = "TERCER Y CUARTO PUESTO"
+const FINAL = "FINAL"
 export default class EliminatoryFase {
-    constructor( )
+    constructor(  )
     {
-       this.matchSchedule = []
-       this.results = []
-
-        
+       this.eliminatoryFases = [] 
+       
     }
    
-    playMatches(){
-        this.matchSchedule.forEach(match => {
-            let result = null
+    playMatches(matchSchedule){
+        let results = []
+        matchSchedule.forEach(match => {
+            let result = null            
             do
             {
                result = this.play(match)
             }while(!result)
-            console.log(result.homeTeam,  result.homeGoals, " - ", result.awayGoals,  result.awayTeam, " => ", result.winner)            
-            this.results.push(result)
+            
+            results.push(result)
          })
+         return results
+
     }
 
     play(match, sePuedeEmpatar = false)
@@ -90,6 +97,7 @@ export default class EliminatoryFase {
         let x = 1
         let homeTeam = ""
         let awayTeam = ""
+        let matchSchedule = []
         results.forEach(result =>{
             if (x == 1) {
                 homeTeam = result.winner
@@ -97,16 +105,18 @@ export default class EliminatoryFase {
             }else
             {
                 awayTeam = result.winner
-                this.matchSchedule.push([homeTeam,awayTeam])
+                matchSchedule.push([homeTeam,awayTeam])
                 x = 1
             }             
-        })       
+        })      
+        return matchSchedule 
     }
 
     getMathcScheduleToLosers (results){
         let x = 1
         let homeTeam = ""
         let awayTeam = ""
+        let matchSchedule = []
         results.forEach(result =>{
             if (x == 1) {
                 homeTeam = result.loser
@@ -114,16 +124,18 @@ export default class EliminatoryFase {
             }else
             {
                 awayTeam = result.loser
-                this.matchSchedule.push([homeTeam,awayTeam])
+                matchSchedule.push([homeTeam,awayTeam])
                 x = 1
             }             
-        })       
+        })      
+        return matchSchedule 
     }
 
-    getMatchScheduleToOctavos (groups)
+    getMatchSchedule (groups)
     {
        let match1 = []
        let match2 = []
+       let matchSchedule = []
        let x=1
 
         groups.forEach(group => {                   
@@ -131,8 +143,8 @@ export default class EliminatoryFase {
                 if(x == 2){
                     match1.push(result.standings[SECOND_OF_GROUP].name)
                     match2.push(result.standings[WINNER_OF_GROUP].name)
-                    this.matchSchedule.push (match1)
-                    this.matchSchedule.push (match2)
+                    matchSchedule.push (match1)
+                    matchSchedule.push (match2)
                     match1 = []
                     match2 = []
                     x=1
@@ -144,32 +156,65 @@ export default class EliminatoryFase {
                 }                 
             })            
         });
+        return matchSchedule
     } 
 
-    startOctavos(groups)
+
+
+
+    start(groups)
     {
-        this.getMatchScheduleToOctavos(groups)
-        this.playMatches()
+        let faseEliminatoryName = ""        
+        let fase = null
+        
+     
+
+        while(groups.length > 1)
+        {
+
+            if (groups.length === 2)
+            {
+                faseEliminatoryName = SEMIFINAL;
+                fase = this.createNewEliminatoryFase(faseEliminatoryName, groups)
+            
+                const groupsLosers = this.getMathcScheduleToLosers(fase.results)
+                faseEliminatoryName = THRID_AND_FORTH
+                const faseLoosers = this.createNewEliminatoryFase(faseEliminatoryName, groupsLosers)
+    
+                
+                const groupsWinners = this.getMathcScheduleToWinners(fase.results)
+                faseEliminatoryName = FINAL
+                const isTheFinal = 1
+                const faseWinners = this.createNewEliminatoryFase(faseEliminatoryName, groupsWinners, isTheFinal)   
+                
+                groups = []
+                
+    
+            } else {
+                switch(groups.length){
+                    case 8:
+                        faseEliminatoryName = ROUND_OF_16;
+                        break
+                    case 4:
+                        faseEliminatoryName = ROUND_OF_8;
+                        break                    
+                }  
+                fase = this.createNewEliminatoryFase(faseEliminatoryName, groups)
+                groups = this.getMathcScheduleToWinners(fase.results)                
+            }            
+        }    
+        return this.eliminatoryFases    
     }
   
-    startCuartos(resultsOctavos){
-        this.getMatchScheduleToCuartosAndSemifinal(resultsOctavos)
-        this.playMatches()
+    createNewEliminatoryFase(name,groups, isTheFinal = 0)
+    {
+        const fase = new EliminatoryFasePlayed(name)    
+        fase.matchSchedule = groups
+        fase.results = this.playMatches(fase.matchSchedule)
+        fase.isTheFinal = isTheFinal
+        this.eliminatoryFases.push(fase)
+       return fase
     }
-
-    startSemifinals(resultsOctavos){
-        this.getMatchScheduleToCuartosAndSemifinal(resultsOctavos)
-        this.playMatches()
-    }
-
-    startThirdAndForthPlace(resultsSemifinals){
-        this.getMathcScheduleToLosers(resultsSemifinals)
-        this.playMatches()
-    }
-
-    startFinal(resultsSemifinals){
-        this.getMathcScheduleToWinners(resultsSemifinals)
-        this.playMatches()
-    }
-
+    
+   
 }
