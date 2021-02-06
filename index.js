@@ -4,9 +4,9 @@ import { selecciones } from './teams.js'
 import {LOCAL_TEAM, AWAY_TEAM} from './classes/League.js'
 
 const config = { rounds: 1, groups: 8 }
-const premier = new FootballLeague('Champions League', selecciones, config)
+const worldCup = new FootballLeague('World Cup', selecciones, config)
 
-premier.organizeGroups()
+worldCup.organizeGroups()
 
 
 console.log("GRUPOS Y EQUIPOS");
@@ -15,20 +15,21 @@ console.log("=========================================");
 
 let i = 1
 
-premier.groups.forEach(element => {
+worldCup.groups.forEach(element => {
     console.log("");
     console.log(element.name)
     console.log("--------------------------")
     element.teams.forEach(team => console.log(team.name))
-    let jornada = 1
-    element.matches.forEach(match=>
+    
+    element.journeys.forEach(journey=>
         {
             console.log("")
-            console.log("Jornada", jornada)
-            match.forEach(matchTeams=> {
+            console.log(journey.name, ":")
+            
+            journey.matches.forEach(matchTeams=> {
                 console.log(matchTeams[LOCAL_TEAM].name , ' vs ', matchTeams[AWAY_TEAM].name)
             })
-            jornada++
+    
         })
 });
 
@@ -37,7 +38,30 @@ console.log("=========================================");
 console.log("===========COMIENZA EL MUNDIAL===========");
 console.log("=========================================");
 
-premier.start()
+worldCup.start()
+
+worldCup.groups.forEach(group => {    
+      group.journeys.forEach(journey => {
+        console.log(group.name ,' - ', journey.name, ":" )
+        console.log('-----------------------')
+   
+         journey.matches.forEach(match => {
+             const resultMatch = match.result[0]
+             console.log(resultMatch.homeTeam.name," ", resultMatch.homeGoals, " - ", resultMatch.awayGoals, " ", resultMatch.awayTeam.name) 
+         })
+         console.table(journey.standings.map( team => {
+                return {
+                    Equipo: team.name,
+                    Puntos: team.points,
+                    'Goles a favor': team.goalsFor,
+                    'Goles en contra': team.goalsAgainst,
+                    'Diferencia goles': team.goalsFor - team.goalsAgainst
+                }
+            }
+            ))     
+      })
+})
+
 
 console.log("=========================================");
 console.log("==COMIENZO DE LA FASE DE ELIMINATORIAS===");
@@ -46,7 +70,7 @@ console.log("=========================================");
 
 console.log("============OCTAVOS DE FINAL=============");
 const eliminatoryFase = new EliminatoryFase()
-eliminatoryFase.startOctavos(premier.groups)
+eliminatoryFase.startOctavos(worldCup.groups)
 
 console.log("============CUARTOS DE FINAL=============");
 

@@ -1,12 +1,15 @@
 const LOCAL_TEAM = 0
 const AWAY_TEAM = 1
+import Journey from './Journey.js'
+import Match from './Match.js'
+
 export default class Group {
     constructor(name, teams )
     {
         this.name = name
         this.teams = teams
-        this.matches = []
-        this.results = []
+        this.journeys =[]
+        
         
     }
 
@@ -14,38 +17,48 @@ export default class Group {
     initSchedule(round) {
         const numberOfMatchDays = this.teams.length - 1
         const numberOfMatchesPerMatchDay = this.teams.length / 2
+        
         for (let i = 0; i < numberOfMatchDays; i++) {
             const matchDay = []  // jornada vacía
             for (let j = 0; j < numberOfMatchesPerMatchDay; j++) {
-                const match = ['Equipo local', 'Equipo visitante']  // partido
+                const match = new Match(['Equipo local', 'Equipo visitante'])  // partido
                 matchDay.push(match)
             }
             // una vez añadidos todos los partidos a la jornada
-            round.push(matchDay)  // añadimos la jornada a la planificación
+         //   round = "Jornada " + (i+1)
+         const journeyName = 'Jornada ' + (i+1)
+         const journey = new Journey(journeyName, matchDay)
+        round.push(journey)  // añadimos la jornada a la planificación
+          //  round = null
         }
     }
 
     setLocalTeams(round) {
         const maxHomeTeams = this.teams.length - 2
         let teamIndex = 0
-        round.forEach(matchDay => { // por cada jornada
-            matchDay.forEach(match => { // por cada partido de cada jornada
-                // establecer el equipo local
+
+        round.forEach(journey => {
+            
+            journey.matches.forEach(match => {
+                  // establecer el equipo local
                 match[LOCAL_TEAM] = this.teams[teamIndex]
                 teamIndex++
                 if (teamIndex > maxHomeTeams) {
                     teamIndex = 0
                 }
-            })
+
+            });
         })
+      
+
     }
 
     setAwayTeams(round) {
         const maxAwayTeams = this.teams.length - 2
         let teamIndex = maxAwayTeams
-        round.forEach(matchDay => {
+        round.forEach(journey => {
             let firstMatchFound = false
-            matchDay.forEach(match => {
+            journey.matches.forEach(match => {
                 if (!firstMatchFound) {
                     firstMatchFound = true
                 } else {
@@ -62,8 +75,8 @@ export default class Group {
     fixLastTeamSchedule(round) {
         let matchDayNumber = 1
         const lastTeamName = this.teams[this.teams.length - 1]
-        round.forEach(matchDay => {
-            const firstMatch = matchDay[0]
+        round.forEach(journey => {
+            const firstMatch = journey.matches[0]
             if (matchDayNumber % 2 == 0) { // si jornada par -> juega en casa
                 firstMatch[AWAY_TEAM] = firstMatch[LOCAL_TEAM]
                 firstMatch[LOCAL_TEAM] = lastTeamName
@@ -84,7 +97,7 @@ export default class Group {
         this.setAwayTeams(newRound)
         this.fixLastTeamSchedule(newRound)
 
-        this.matches = newRound
+        this.journeys = newRound
     
         
     }

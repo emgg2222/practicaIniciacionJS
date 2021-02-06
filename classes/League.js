@@ -41,8 +41,6 @@ export default class League {
         }
     }
 
-    // Mi parte
-
     organizeGroups()  {
        
         const numTeamPerGroup = this.teams.length / this.config.groups
@@ -64,7 +62,7 @@ export default class League {
                 letterAscii++
                 numTeamSaveInGroup = 1
             } else 
-             {           
+             {     
                       
                 numTeamSaveInGroup++
              }   
@@ -93,36 +91,18 @@ export default class League {
     start() {
         this.groups.forEach(group => {
             const matchDaySummary = {
-                results: [],
-                standings: null
-            }           
-            let jornada = 1
-            group.matches.forEach(match => {
-                console.log(group.name ,' - ', "Jornada ", jornada, ":" )
-                console.log('-----------------------')
-                match.forEach(element => {
+                results: []
+            }    
+            group.journeys.forEach(journey => {
+                journey.matches.forEach(element => {
                     const result = this.play(element)              
                     this.updateTeams(result)
                     matchDaySummary.results.push(result)
-                    console.log(result.homeTeam.name," ", result.homeGoals, " - ", result.awayGoals, " ", result.awayTeam.name)                   
+                    element.result.push(result);                  
                 })   
-                jornada++       
                 this.getStandings(group.teams, matchDaySummary.results)
-                matchDaySummary.standings = group.teams.map(team => clone(team))             
-            
-                console.table(matchDaySummary.standings.map( team => {
-                return {
-                    Equipo: team.name,
-                    Puntos: team.points,
-                    'Goles a favor': team.goalsFor,
-                    'Goles en contra': team.goalsAgainst,
-                    'Diferencia goles': team.goalsFor - team.goalsAgainst
-                }
-            }
-            ))        
-            })           
-            group.results.push(matchDaySummary)         
+                journey.standings = group.teams.map(team => clone(team))    
+            })                               
         })
-
     }
 }
