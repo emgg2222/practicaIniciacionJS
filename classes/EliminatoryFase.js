@@ -13,8 +13,7 @@ const FINAL = "FINAL"
 export default class EliminatoryFase {
     constructor(  )
     {
-       this.eliminatoryFases = [] 
-       
+       this.eliminatoryFases = []        
     }
    
     playMatches(matchSchedule){
@@ -132,7 +131,7 @@ export default class EliminatoryFase {
         fase.results = this.playMatches(fase.matchSchedule)
         fase.isTheFinal = isTheFinal
         this.eliminatoryFases.push(fase)
-       return fase
+        return fase
     }
 
     start(groups)
@@ -147,15 +146,14 @@ export default class EliminatoryFase {
                 faseEliminatoryName = SEMIFINAL;
                 fase = this.createNewEliminatoryFase(faseEliminatoryName, groups)
             
-                const groupsLosers = this.getMathcScheduleToLosers(fase.results)
+                const losersGroups = this.getMathcScheduleToLosers(fase.results)
                 faseEliminatoryName = THRID_AND_FORTH
-                const faseLoosers = this.createNewEliminatoryFase(faseEliminatoryName, groupsLosers)
+                const loosersFase = this.createNewEliminatoryFase(faseEliminatoryName, losersGroups)
     
-                
-                const groupsWinners = this.getMathcScheduleToWinners(fase.results)
+                const winnersGroups = this.getMathcScheduleToWinners(fase.results)
                 faseEliminatoryName = FINAL
                 const isTheFinal = 1
-                const faseWinners = this.createNewEliminatoryFase(faseEliminatoryName, groupsWinners, isTheFinal)   
+                const winnersFase = this.createNewEliminatoryFase(faseEliminatoryName, winnersGroups, isTheFinal)   
                 
                 groups = []                
     
@@ -172,6 +170,7 @@ export default class EliminatoryFase {
                 groups = this.getMathcScheduleToWinners(fase.results)                
             }            
         }    
+
         return this.eliminatoryFases    
     }   
 }
