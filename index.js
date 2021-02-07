@@ -1,10 +1,10 @@
 import FootballLeague from './classes/PointsBasedLeague.js'
 import EliminatoryFase from './classes/EliminatoryFase.js'
-import { selecciones } from './teams.js'
+import { teams } from './teams.js'
 import {LOCAL_TEAM, AWAY_TEAM} from './classes/League.js'
 
 const config = { rounds: 1, groups: 8 }
-const worldCup = new FootballLeague('World Cup', selecciones, config)
+const worldCup = new FootballLeague('World Cup', teams, config)
 
 worldCup.organizeGroups()
 
@@ -72,19 +72,19 @@ const firstGroup = eliminatoryFase.getMatchSchedule(worldCup.groups)
 
 const resultsEliminatoryFase = eliminatoryFase.start(firstGroup);
 
-resultsEliminatoryFase.forEach(result => {
+resultsEliminatoryFase.forEach(resultEliminatoryFase => {
 
         console.log("")
-        console.log("============",result.name,"=============");
-        result.results.forEach(element => {
-        console.log(element.homeTeam,  element.homeGoals, " - ", element.awayGoals,  element.awayTeam, " => ", element.winner)            
+        console.log("============",resultEliminatoryFase.name,"=============");
+        resultEliminatoryFase.results.forEach(result => {
+        console.log(result.homeTeam,  result.homeGoals, " - ", result.awayGoals,  result.awayTeam, " => ", result.winner)            
 
         })
     
-        if(result.isTheFinal) {
+        if(resultEliminatoryFase.isTheFinal) {
             console.log("");
             console.log("=========================================");
-            console.log(result.results[0].winner, " CAMPEÓN DEL MUNDO!");
+            console.log(resultEliminatoryFase.results[0].winner, " CAMPEÓN DEL MUNDO!");
             console.log("=========================================");
         }
     

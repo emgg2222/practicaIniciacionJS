@@ -21,36 +21,30 @@ export default class EliminatoryFase {
         let results = []
         matchSchedule.forEach(match => {
             let result = null            
-            do
-            {
+            do {
                result = this.play(match)
             }while(!result)
             
             results.push(result)
          })
          return results
-
     }
 
-    play(match, sePuedeEmpatar = false)
-    {   
+    play(match, canBeTied = false) {   
         
         const homeGoals = getGoals(10)
         const awayGoals = getGoals(10)  
         let winner = ""
         let loser = ""
 
-        if(homeGoals === awayGoals && !sePuedeEmpatar)
-        {
+        if(homeGoals === awayGoals && !canBeTied) {
             return false
         }  
         
-        if(homeGoals > awayGoals)
-        {
+        if(homeGoals > awayGoals) {
             winner = match[LOCAL_TEAM]
             loser = match[AWAY_TEAM]
-        }else
-        {
+        }else {
             winner = match[AWAY_TEAM]
             loser = match[LOCAL_TEAM]
         }
@@ -64,35 +58,7 @@ export default class EliminatoryFase {
             loser
         }
     }
-
-    getMatchScheduleToCuartosAndSemifinal(results){
-        let x = 1
-        let match1HomeTeam = ""
-        let match2HomeTeam = ""
-        results.forEach(result =>{
-            if (x % 2 == 0) {
-                if(match2HomeTeam == ""){
-                    match2HomeTeam = result.winner
-                }else
-                {
-                    this.matchSchedule.push([match2HomeTeam,result.winner])
-                    match2HomeTeam = ""
-                }                    
-            }else 
-            {
-                if(match1HomeTeam == ""){
-                    match1HomeTeam = result.winner
-                }else
-                {
-                    this.matchSchedule.push([match1HomeTeam,result.winner])
-                    match1HomeTeam = ""
-                }                  
-                
-            }  
-            x++           
-        })
-    }
-
+   
     getMathcScheduleToWinners (results){
         let x = 1
         let homeTeam = ""
@@ -159,19 +125,23 @@ export default class EliminatoryFase {
         return matchSchedule
     } 
 
-
-
+    createNewEliminatoryFase(name,groups, isTheFinal = 0)
+    {
+        const fase = new EliminatoryFasePlayed(name)    
+        fase.matchSchedule = groups
+        fase.results = this.playMatches(fase.matchSchedule)
+        fase.isTheFinal = isTheFinal
+        this.eliminatoryFases.push(fase)
+       return fase
+    }
 
     start(groups)
     {
         let faseEliminatoryName = ""        
         let fase = null
-        
-     
 
         while(groups.length > 1)
         {
-
             if (groups.length === 2)
             {
                 faseEliminatoryName = SEMIFINAL;
@@ -187,8 +157,7 @@ export default class EliminatoryFase {
                 const isTheFinal = 1
                 const faseWinners = this.createNewEliminatoryFase(faseEliminatoryName, groupsWinners, isTheFinal)   
                 
-                groups = []
-                
+                groups = []                
     
             } else {
                 switch(groups.length){
@@ -204,17 +173,5 @@ export default class EliminatoryFase {
             }            
         }    
         return this.eliminatoryFases    
-    }
-  
-    createNewEliminatoryFase(name,groups, isTheFinal = 0)
-    {
-        const fase = new EliminatoryFasePlayed(name)    
-        fase.matchSchedule = groups
-        fase.results = this.playMatches(fase.matchSchedule)
-        fase.isTheFinal = isTheFinal
-        this.eliminatoryFases.push(fase)
-       return fase
-    }
-    
-   
+    }   
 }

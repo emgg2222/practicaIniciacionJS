@@ -48,7 +48,7 @@ export default class League {
         const groups = []
         let indexTeam = 0
         let numTeamSaveInGroup = 1
-        let letterAscii = 65; //La letra del grupo empieza en A
+        let letterAscii = 65; //group letter starts with A
         
         this.teams.forEach(team => {
             teamsPerGroup.push (team);  
@@ -65,26 +65,22 @@ export default class League {
              {     
                       
                 numTeamSaveInGroup++
-             }   
-            
-
+             } 
         })    
 
         this.groups   = groups
     }
 
-    getStandings(){
+    getStandings() {
         throw new Error('updateStandings method not implemented')
     }
 
-    play(match){
+    play(match) {
 
         throw new Error('play method not implemented')
-
     }
 
-    updateTeams()
-    {
+    updateTeams() {
         throw new Error('updateTeams method not implemented') 
     }
 
